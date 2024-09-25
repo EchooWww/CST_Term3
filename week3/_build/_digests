@@ -1,0 +1,6 @@
+"Resource: /Users/echo/Desktop/Term3/functional/week3/kvtree.mli": "\223KF\225-<\187\210u\007\181\140\210H1\182"
+"Rule: ocaml: mli -> cmi (%=kvtree )": "]\206\166\216\021\019Q\249\130\179\137]W_\224\157"
+"Resource: /Users/echo/Desktop/Term3/functional/week3/kvtree.ml": "\221\200\158\194\167~\250m/5\187\197eV\211\186"
+"Rule: ocaml dependencies mli (%=kvtree )": "\197\187\170\229\129\216\0002\249\232\248h\215^\128 "
+"Rule: ocaml dependencies ml (%=kvtree )": "-\209\197\006\142_Jl\191\171\127\193T\198\250="
+"Rule: ocaml: ml & cmi -> cmo (%=kvtree )": "\024\184\2368\221O\129\127-\179\137\023\227\b\178\195"
