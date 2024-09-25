@@ -16,7 +16,7 @@ class Hunt(override val minion: Minion): Mission(), Repeatable {
     }
 
     override fun repeat(time: Int, missionListener: MissionListener) {
-        for (i in 0..time){
+        for (i in 1..time){
             this.start(missionListener)
         }
     }
