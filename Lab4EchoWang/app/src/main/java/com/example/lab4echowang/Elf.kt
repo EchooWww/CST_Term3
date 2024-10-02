@@ -1,6 +1,6 @@
 package com.example.lab4echowang
 
-class Elf: Minion() {
+class Elf: Minion{
     override val race = "Elf"
     override val baseHealth = 2
     override val baseSpeed = 8

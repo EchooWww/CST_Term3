@@ -18,11 +18,12 @@ fun main() {
         }
 
     }
-    val minion = Elf()
-    val mission = Gather(minion)
-    mission.start(anonymous)
+    val orc = Orc (Human())
+
+    val mission = Hunt(orc, null, null)
+    mission.repeat(3, anonymous)
 
     val minion2 = Dwarf()
-    val mission2 = Hunt(minion2)
+    val mission2 = Hunt(minion2, null, Companion())
     mission2.repeat(4, anonymous)
-}
+    }

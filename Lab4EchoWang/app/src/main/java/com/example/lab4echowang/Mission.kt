@@ -1,7 +1,6 @@
 package com.example.lab4echowang
 
-abstract class Mission {
-    abstract val minion:Minion
+abstract class Mission(val minion: Minion, val item: Item? = null, val companion: Companion?=null) {
     fun start(missionListener: MissionListener) {
         missionListener.missionStart(this.minion)
         missionListener.missionProgress()
