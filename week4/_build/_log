@@ -1,0 +1,10 @@
+### Starting build.
+# Target: sort.ml.depends, tags: { extension:ml, file:sort.ml, ocaml, ocamldep, quiet }
+/Users/echo/.opam/default/bin/ocamldep.opt -modules sort.ml > sort.ml.depends
+# Target: sort.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:sort.cmo, file:sort.ml, implem, ocaml, quiet }
+/Users/echo/.opam/default/bin/ocamlc.opt -c -o sort.cmo sort.ml
+# Target: sort.cmx, tags: { compile, extension:cmx, extension:ml, file:sort.cmx, file:sort.ml, implem, native, ocaml, quiet }
+/Users/echo/.opam/default/bin/ocamlopt.opt -c -o sort.cmx sort.ml
+# Target: sort.native, tags: { dont_link_with, extension:native, file:sort.native, link, native, ocaml, program, quiet }
+/Users/echo/.opam/default/bin/ocamlopt.opt sort.cmx -o sort.native
+# Compilation successful.
