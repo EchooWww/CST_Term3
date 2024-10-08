@@ -1,0 +1,15 @@
+[submodule "assignment-1-snake-game-EchooWww"]
+	path = assignment-1-snake-game-EchooWww
+	url = https://github.com/comp3522-f24/assignment-1-snake-game-EchooWww
+[submodule "lab-1-python-basics-EchooWww"]
+	path = lab-1-python-basics-EchooWww
+	url = https://github.com/comp3522-f24/lab-1-python-basics-EchooWww
+[submodule "lab3-solid-EchooWww"]
+	path = lab3-solid-EchooWww
+	url = https://github.com/comp3522-f24/lab3-solid-EchooWww
+[submodule "lab-4-uml-and-solid-f-a-m-iloveuml"]
+	path = lab-4-uml-and-solid-f-a-m-iloveuml
+	url = https://github.com/comp3522-f24/lab-4-uml-and-solid-f-a-m-iloveuml
+[submodule "lab-5-testing-exceptions-and-file-handling-EchooWww"]
+	path = lab-5-testing-exceptions-and-file-handling-EchooWww
+	url = https://github.com/comp3522-f24/lab-5-testing-exceptions-and-file-handling-EchooWww
