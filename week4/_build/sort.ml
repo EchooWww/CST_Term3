@@ -44,7 +44,10 @@ let read_all_lines ?(filename=None)() =
     (* filter, sort and print the records *)
     read_lines []
     |> List.filter_map (fun x -> x) 
-    |> List.sort (fun x y -> y.score - x.score) 
+    |> List.sort (fun x y ->
+        match compare y.score x.score with
+        | 0 -> String.compare x.id y.id 
+        | n -> n) 
     |> List.iter (fun row -> Printf.printf "%3d %s\n" row.score row.id);
     close_in ic
   with 
