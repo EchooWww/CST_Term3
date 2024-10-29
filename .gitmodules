@@ -13,3 +13,6 @@
 [submodule "lab-5-testing-exceptions-and-file-handling-EchooWww"]
 	path = lab-5-testing-exceptions-and-file-handling-EchooWww
 	url = https://github.com/comp3522-f24/lab-5-testing-exceptions-and-file-handling-EchooWww
+[submodule "lab-7-profiling-EchooWww"]
+	path = lab-7-profiling-EchooWww
+	url = https://github.com/comp3522-f24/lab-7-profiling-EchooWww
