@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Lab7EchoWang</string>
+    <string-array name="first">
+        <item>Blathers</item>
+        <item>Celeste</item>
+        <item>Isabelle</item>
+    </string-array>
+    <string-array name="second">
+        <item>Kapp\'n</item>
+        <item>Kicks</item>
+        <item>Pascal</item>
+
+    </string-array>
+    <string-array name="third">
+        <item>Redd</item>
+        <item>Tim Nook</item>
+        <item>Timmy&amp;Tommy</item>
+    </string-array>
+</resources>

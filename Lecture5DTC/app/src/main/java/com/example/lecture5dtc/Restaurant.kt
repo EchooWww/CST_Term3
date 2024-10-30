@@ -6,6 +6,7 @@ interface POSSystem {
 }
 
 open class Restaurant:POSSystem {
+    var name:String = "Restaurant"
     override fun processOrder() {
         print("Processing order...")
     }
@@ -16,6 +17,10 @@ open class Restaurant:POSSystem {
 
     fun reserveTable() {
         print("Reserving table...")
+    }
+
+    fun update(restaurant: Restaurant) {
+        restaurant.name = "New Restaurant"
     }
 }
 
@@ -38,4 +43,9 @@ class BikiniBottomCafe(private val posSystem: POSSystem) :POSSystem by posSystem
     fun processOnlineOrder() {
         print("Processing online order...")
     }
+}
+
+fun main() {
+    val cafe = BikiniBottomCafe(KrustyKrab())
+
 }

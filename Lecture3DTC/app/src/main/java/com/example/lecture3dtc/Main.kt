@@ -9,6 +9,7 @@ fun main() {
     // Using pairs and triples
     println(twoValues("spongebob", 3).first)
     println(threeValues("spongebob", 3, true).second)
+    print(threeValues("spongebob", 3, true).third)
 
     // Destructuring a Triple
     val (name, age, isStudent) = threeValues("spongebob", 3, true)
