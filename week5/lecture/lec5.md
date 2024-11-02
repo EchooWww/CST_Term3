@@ -178,7 +178,7 @@ module type OrderedType = sig
 end
 ```
 
-Inside the ml file, we can create a new parameterized module `Make`, which takes a module `Ord` of type `OrderedType` as an argument, and returns a new module.
+Inside the ml file, we can create a new parameterized module `Make`, which takes a module `Ord` of type `OrderedType` (i.e., a type definition with a type `t` and a comparison function `compare`) as an argument:
 
 ```ocaml
 module Make(Ord:OrderedType) = struct
