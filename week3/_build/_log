@@ -1,0 +1,10 @@
+### Starting build.
+# Target: kvtree.mli.depends, tags: { extension:mli, file:kvtree.mli, ocaml, ocamldep, quiet }
+/Users/echo/.opam/default/bin/ocamldep.opt -modules kvtree.mli > kvtree.mli.depends
+# Target: kvtree.cmi, tags: { byte, compile, extension:mli, file:kvtree.mli, interf, ocaml, quiet }
+/Users/echo/.opam/default/bin/ocamlc.opt -c -o kvtree.cmi kvtree.mli
+# Target: kvtree.ml.depends, tags: { extension:ml, file:kvtree.ml, ocaml, ocamldep, quiet }
+/Users/echo/.opam/default/bin/ocamldep.opt -modules kvtree.ml > kvtree.ml.depends
+# Target: kvtree.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:kvtree.cmo, file:kvtree.ml, implem, ocaml, quiet }
+/Users/echo/.opam/default/bin/ocamlc.opt -c -o kvtree.cmo kvtree.ml
+# Compilation successful.
