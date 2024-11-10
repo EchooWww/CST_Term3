@@ -9,15 +9,13 @@ let rec take n s =
   if n <= 0 then []
   else hd s::take (n-1) (tl s)
 
-let rec del x s =
-  if x = hd s then tl s
-  else del x (tl s)
-
+(** [filter f s] return a new stream of elements from [s] that satisfy [f] *)
 let rec filter f s = 
   if f (hd s) then Cons((hd s), fun() -> filter f (tl s))
   else filter f (tl s)
 
-let rec primes = 
+(** [primes] return a new stream of prime numbers using the sieve of Eratosthenes *)
+let primes = 
   let rec seive s = 
-    Cons(hd s, (fun() -> filter (fun x -> x mod (hd s) <> 0) (tl s)))
+    Cons(hd s, fun () -> seive (filter (fun x -> x mod (hd s) <> 0) (tl s)))
   in seive (from 2)

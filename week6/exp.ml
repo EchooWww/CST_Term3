@@ -28,4 +28,3 @@ let rec exp_terms (x:float):float lazystream =
   unfold (fun (a,b) -> (a/.(fact b), (a*.x, b+1))) (1.0, 0)
 
 let res =  exp_terms 1.1 |> take 20 |> sum
-
