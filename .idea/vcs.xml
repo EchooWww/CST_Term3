@@ -9,6 +9,7 @@
     <mapping directory="$PROJECT_DIR$/lab-5-testing-exceptions-and-file-handling-EchooWww" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lab-7-profiling-EchooWww" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lab-8-library-factory-design-pattern-EchooWww" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lab-9-des-chain-of-responsibility-i" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lab3-solid-EchooWww" vcs="Git" />
   </component>
 </project>

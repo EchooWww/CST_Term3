@@ -16,3 +16,10 @@
 [submodule "lab-7-profiling-EchooWww"]
 	path = lab-7-profiling-EchooWww
 	url = https://github.com/comp3522-f24/lab-7-profiling-EchooWww
+[submodule "lab-8-library-factory-design-pattern-EchooWww"]
+    path = lab-8-library-factory-design-pattern-EchooWww
+    url = https://github.com/comp3522-f24/lab-8-library-factory-design-pattern-EchooWww
+
+[submodule "lab-9-des-chain-of-responsibility-i"]
+    path = lab-9-des-chain-of-responsibility-i
+    url = https://github.com/comp3522-f24/lab-9-des-chain-of-responsibility-i
