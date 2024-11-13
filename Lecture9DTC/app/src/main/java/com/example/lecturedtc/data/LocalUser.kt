@@ -15,8 +15,11 @@ interface UserDao{
     @Query ("SELECT * FROM users")
     fun getAll(): List<LocalUser>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun add (user: LocalUser)
+
+    @Delete
+    fun delete(user: LocalUser)
 }
 
 @Database(entities = [LocalUser::class], version = 1)

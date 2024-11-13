@@ -11,6 +11,11 @@ class UserState(private val repository: UserRepository) {
         repository.insertEntity(user)
     }
 
+    fun delete(user: LocalUser) {
+        users.remove(user)
+        repository.deleteEntity(user)
+    }
+
     fun refresh() {
         users.apply{ // using apply so the recomposition is only triggered once for the 2 function calls below
             clear()

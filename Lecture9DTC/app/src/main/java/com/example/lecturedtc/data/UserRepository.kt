@@ -11,4 +11,8 @@ class UserRepository(private val userDao: UserDao) {
     fun getAllEntities(): List<LocalUser> {
         return userDao.getAll()
     }
+
+    fun deleteEntity(user: LocalUser) {
+        userDao.delete(user)
+    }
 }
