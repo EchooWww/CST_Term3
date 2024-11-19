@@ -4,7 +4,8 @@
  * #load "bstree.cmo";;
  * you can call a function like this: Bstree.is_empty 
  *) 
-type 'a t = Leaf | Node of 'a * 'a t* 'a t
+type 'a t = 
+  Leaf | Node of 'a * 'a t* 'a t
 
 let empty = Leaf
 
