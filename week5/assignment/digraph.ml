@@ -13,7 +13,7 @@ end
 
 module StringMap = Map.Make(String)
 
-module Digraph = struct 
+module Digraph:D = struct 
   (* The abstract digraph type, each vertex is a string and the edges are represented as a map from a vertex to a list of pairs of vertices and distances *)
   type t = (string * int) list StringMap.t
   type edge = string * string * int
@@ -48,9 +48,8 @@ module Digraph = struct
         StringMap.add x [(y,z)] t
 
   (* Create a graph from a list of edges *)
-  let rec of_edges = function
-    | [] -> empty
-    | e::es -> add_edge e (of_edges es)
+  let rec of_edges edges = 
+    List.fold_left (fun g e -> add_edge e g) empty (List.rev edges)
 
   (* Helper function to convert the map to a list of edges, not exposed in the interface *)
   let rec map_to_list map acc = 

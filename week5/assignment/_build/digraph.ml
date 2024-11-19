@@ -13,18 +13,21 @@ end
 
 module StringMap = Map.Make(String)
 
-module Digraph = struct 
+module Digraph:D = struct 
+  (* The abstract digraph type, each vertex is a string and the edges are represented as a map from a vertex to a list of pairs of vertices and distances *)
   type t = (string * int) list StringMap.t
   type edge = string * string * int
   exception Inv_edge
   exception Inv_graph
   let empty = StringMap.empty
 
+  (* Helper function to check if an edge is valid, not exposed in the interface *)
   let is_valid_edge = function
     | (v1,v2,distance) when v1<>v2 && distance >0 && v1 <> "" && v2 <> "" ->true
     | _ -> false
 
 
+  (* Add an edge to the graph, if the edge is invalid raise Inv_edge, if the edge conflicts with an existing edge raise Inv_graph *)
   let rec add_edge edge t = 
     if not (is_valid_edge edge) then raise Inv_edge
     else 
@@ -44,10 +47,11 @@ module Digraph = struct
       | None ->
         StringMap.add x [(y,z)] t
 
-  let rec of_edges = function
-    | [] -> empty
-    | e::es -> add_edge e (of_edges es)
+  (* Create a graph from a list of edges *)
+  let rec of_edges edges = 
+    List.fold_left (fun g e -> add_edge e g) empty (List.rev edges)
 
+  (* Helper function to convert the map to a list of edges, not exposed in the interface *)
   let rec map_to_list map acc = 
     let kv_list = StringMap.bindings map in
     match kv_list with
@@ -55,6 +59,7 @@ module Digraph = struct
     | (x, [])::zs -> map_to_list (StringMap.of_seq (List.to_seq zs)) acc
     | [] -> acc
 
+  (* Get all the edges in the graph as a sorted list *)
   let edges g =
     let edge_list = map_to_list g [] in
     List.sort (fun (x1, y1, z1) (x2, y2, z2) ->
@@ -63,12 +68,14 @@ module Digraph = struct
         else compare z1 z2
       ) edge_list
 
+  (* Get all the vertices in the graph as a sorted list *)
   let vertices g = 
     StringMap.bindings g 
     |> List.map (fun (x, lst)->(x::List.map fst lst)) 
     |> List.flatten 
     |> List.sort_uniq compare
 
+  (* Get the neighbors of a vertex *)
   let neighbors v g = 
     match StringMap.find_opt v g with
     | Some neighbors -> neighbors
