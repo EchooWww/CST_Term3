@@ -1,106 +1,180 @@
 # Lecture 7: Monads
 
-We define 2 things:
+## Basic Monad Concepts
 
-1. A type constructor `M` that takes a type `'a` and returns a type `'a t` with the return function `val return : 'a -> 'a t`.
-2. A bind operator `>>=` that takes a value of type `'a t` and a function `'a -> 'b t` and returns a value of type `'b t`. The bind operator is written as `let (>>=) : 'a t -> ('a -> 'b t) -> 'b t`.
+Monads are a design pattern that allows us to chain operations while handling computational context (like optionality, multiple values, or state).
 
-The maybe monad is defined as follows (with the type constructor `option`):
+1. Two fundamental components:
+
+   ```ocaml
+   (* Type constructor M transforms a regular type to a monadic type *)
+   (* Example: 'a -> 'a option, or 'a -> 'a list *)
+   M : 'a -> 'a t
+
+   (* Return (or unit) wraps a value in the monadic type *)
+   (* Example: 5 -> Some 5, or 5 -> [5] *)
+   val return : 'a -> 'a t
+   ```
+
+2. Bind operator (>>=):
+   ```ocaml
+   (* Bind chains monadic operations together *)
+   (* Takes a monadic value and a function that produces a monadic value *)
+   val (>>=) : 'a t -> ('a -> 'b t) -> 'b t
+   ```
+
+## Fish Operator (>=>) - Kleisli Composition
+
+The fish operator (>=>) is a way to compose monadic functions directly. It's similar to regular function composition (.), but works with functions that return monadic values.
 
 ```ocaml
-let return x = Some x
-let bind mx f =
-  match mx with
-  | None -> None
-  | Some x -> f x
+(* Definition *)
+let (>=>) f g x = f x >>= g
 
-let (>>=) = bind
+(* Type: ('a -> 'b t) -> ('b -> 'c t) -> ('a -> 'c t) *)
+(* It takes:
+   1. f: a function from 'a to 'b t
+   2. g: a function from 'b to 'c t
+   Returns: a function from 'a to 'c t *)
+
+(* Example with Maybe monad *)
+let safe_div x y = if y = 0 then None else Some (x / y)
+let safe_root x = if x < 0 then None else Some (sqrt x)
+
+(* Compose these functions using >=> *)
+let safe_div_then_root = safe_div 16 >=> safe_root
+
+(* This is equivalent to: *)
+let safe_div_then_root' x =
+  safe_div 16 x >>= fun result ->
+  safe_root result
 ```
 
-Can we have a function works for both `'a list` and `'a option`?
-
-Generics works for different types, but not for different type constructors. We can use monads to abstract over different type constructors.
-
-The fish operator `>=>` is defined as follows:
+### Monad Laws with Fish Operator
 
 ```ocaml
-let (>=>) f g x = f x >>= g
-(*So these 3 are equivalent*)
-return >=> f
-f >=> return
-f
-（* 3 monad laws *）
+(* 1. Left identity: return acts as a neutral element on the left *)
+return >=> f = f
+
+(* 2. Right identity: return acts as a neutral element on the right *)
+f >=> return = f
+
+(* 3. Associativity: composition is associative *)
 (f >=> g) >=> h = f >=> (g >=> h)
 ```
 
-The list monad is defined as follows:
+## Common Monads
+
+### Maybe Monad
 
 ```ocaml
+(* Maybe monad handles computations that might fail *)
+let return x = Some x
+
+let bind mx f =
+  match mx with
+  | None -> None    (* If we have None, propagate the failure *)
+  | Some x -> f x   (* If we have a value, apply the function *)
+
+let (>>=) = bind
+
+(* Example usage *)
+let safe_div x y = if y = 0 then None else Some (x / y)
+let safe_root x = if x < 0 then None else Some (sqrt x)
+
+(* Chain operations that might fail *)
+let result =
+  safe_div 16 2 >>= fun x ->  (* x = 8 *)
+  safe_root x                 (* sqrt(8) *)
+```
+
+### List Monad
+
+```ocaml
+(* List monad handles multiple possibilities/non-determinism *)
 let return x = [x]
 
-(* bind takes an list, a function takes a' and returns a list of b, and returns a list of b *)
-let (>>=) l f =
-  List.comcat_map f l
+(* bind applies f to each element and concatenates results *)
+let (>>=) l f = List.concat_map f l
 
+(* Helper function for filtering possibilities *)
 let guard cond l = if cond then l else []
-      List.init 5 ((+) 1)
 
+(* Example: Find all pairs of numbers that multiply to give n *)
 let multiply_to n =
-  List.init n ((+) 1) >>= fun x ->
-  List.init n ((+) 1) >>= fun y ->
-  guard (x * y = n)@@ (return (x, y))
-(* equivalent to *)
-(* if (x*y) = n then [(x,y)] else [] *)
+  List.init n ((+) 1) >>= fun x ->    (* Generate numbers 1 to n *)
+  List.init n ((+) 1) >>= fun y ->    (* For each x, generate 1 to n *)
+  guard (x * y = n) @ (return (x, y)) (* Keep only pairs that multiply to n *)
+
+(* Example usage *)
+(* multiply_to 12 would return [(1,12); (2,6); (3,4); (4,3); (6,2); (12,1)] *)
 ```
 
-Writer monad: Another example with `'a t = ('a, string) `
-Useful for logging
+### Writer Monad
 
 ```ocaml
-let return x = (x, "")
+(* Writer monad combines computations with a log *)
+let return x = (x, "")  (* Return value with empty log *)
 
 let (>>=) (x, s) f =
-  let (y, s') = f x in
-  (y, s ^ s')
+  let (y, s') = f x in  (* Run the computation *)
+  (y, s ^ s')           (* Concatenate the logs *)
 
+(* Example operations with logging *)
 let inc x = (x + 1, "inc " ^ string_of_int x ^ " ")
 let dec x = (x - 1, "dec " ^ string_of_int x ^ " ")
-return 1 >>= inc >>= inc >>= dec >>= inc
-(* (2, "inc 1 inc 2 dec 3 inc 2 ") *)
 
+(* Example usage *)
+(* This chains several operations while collecting their logs *)
+let computation =
+  return 1 >>= inc >>= inc >>= dec >>= inc
+(* Results in: (2, "inc 1 inc 2 dec 3 inc 2 ") *)
 ```
 
-We can define writer monad in another way.
-
-State monad: a hidden state that is passed around
+### State Monad
 
 ```ocaml
+(* State monad encapsulates mutable state in a functional way *)
 type ('a, 's) t = State of ('s -> 'a * 's)
-let run_state (State f) s = f s
-let state f = State f
-let return x = state (fun s -> (x, s))
+(* 's is the type of state, 'a is the type of value *)
+
+(* Basic operations *)
+let run_state (State f) s = f s      (* Execute a stateful computation *)
+let state f = State f                (* Create a new stateful computation *)
+let return x = state (fun s -> (x, s)) (* Wrap a value in a stateful computation *)
+
 let (>==) m f =
   State (fun s ->
-  let (x, s') = run_state m s in
-  run_state (f x) s')
+    let (x, s') = run_state m s in   (* Run first computation *)
+    run_state (f x) s')              (* Run second computation with updated state *)
 
+(* Example: Stack implementation *)
 type mystack = int list
+
+(* Stack operations *)
 let push x s = x::s
-let pop s =
-  match s with
+let pop s = match s with
   | [] -> failwith "empty stack"
   | x::xs -> xs
-
-let top s =
-  match s with
+let top s = match s with
   | [] -> failwith "empty stack"
   | x::xs -> x
 
-let pop' = State (fun s -> (top s, pop s))
-let push' x = State (fun s -> ((), push x s))
-let top' = State (fun s -> (top s, s))
-let (>>) m1 m2 = m1 >== fun _ -> m2
+(* Monadic stack operations *)
+let pop' = State (fun s -> (top s, pop s))  (* Returns top value and removes it *)
+let push' x = State (fun s -> ((), push x s)) (* Adds value to stack *)
+let top' = State (fun s -> (top s, s))      (* Just returns top value *)
+let (>>) m1 m2 = m1 >== fun _ -> m2        (* Sequence operations, ignore first result *)
 
-let ex1 = pop' >> pop'>> top' >>= funx -> pop' >> top' >>= fun y -> return (x + y)
-
+(* Example: Complex stack manipulation *)
+let ex1 =
+  pop' >> pop' >> top' >>= fun x ->  (* Pop twice, look at top *)
+  pop' >> top' >>= fun y ->          (* Pop once more, look at top *)
+  return (x + y)                     (* Return sum of two values *)
 ```
+
+The key advantage of monads is that they allow us to:
+
+1. Separate the handling of computational effects (failure, multiple values, state) from the core logic
+2. Chain operations in a clean, composable way
+3. Reuse common patterns across different types of computations
