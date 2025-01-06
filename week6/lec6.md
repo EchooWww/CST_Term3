@@ -30,7 +30,7 @@ let rec take n (Cons (h, t)) =
 (* Alternative version of 'take' using 'hd' and 'tl' for clarity. *)
 let rec take n s =
   if n <= 0 then []
-  else hd s :: take (n - 1) (tl s)
+  else hd s :: take (n - 1) （(tl s)()）
 
 (* Drop the first 'n' elements and return the rest of the stream. *)
 let rec drop n (Cons (h, t) as s) =
@@ -50,8 +50,8 @@ let rec map f (Cons (h, t)) = Cons (f h, fun () -> map f (t ()))
 let rec filter f (Cons (h, t)) =
   if f h then Cons (h, fun () -> filter f (t ()))
   else filter f (t ())
-
-let map2 f (Cons (h1, t1)) (Cons (h2, t2)) =
+(* map function which takes a binary function and two streams *)
+let rec map2 f (Cons (h1, t1)) (Cons (h2, t2)) =
   Cons (f h1 h2, fun () -> map2 f (t1 ()) (t2 ()))
 ```
 

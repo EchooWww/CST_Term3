@@ -7,6 +7,8 @@ module MinPQueue = struct
     | c -> c
 end
 
+open Digraph
+
 module PathSet = Set.Make(MinPQueue)
 
 (* Dijkstra's algorithm *)

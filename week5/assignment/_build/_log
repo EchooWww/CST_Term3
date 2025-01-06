@@ -1,10 +1,10 @@
 ### Starting build.
 # Target: digraph.mli.depends, tags: { extension:mli, file:digraph.mli, ocaml, ocamldep, quiet }
-/Users/echo/.opam/default/bin/ocamldep.opt -modules digraph.mli > digraph.mli.depends # cached
+/Users/echo/.opam/default/bin/ocamldep.opt -modules digraph.mli > digraph.mli.depends
 # Target: digraph.cmi, tags: { byte, compile, extension:mli, file:digraph.mli, interf, ocaml, quiet }
-/Users/echo/.opam/default/bin/ocamlc.opt -c -o digraph.cmi digraph.mli # cached
+/Users/echo/.opam/default/bin/ocamlc.opt -c -o digraph.cmi digraph.mli
 # Target: digraph.ml.depends, tags: { extension:ml, file:digraph.ml, ocaml, ocamldep, quiet }
-/Users/echo/.opam/default/bin/ocamldep.opt -modules digraph.ml > digraph.ml.depends # cached
+/Users/echo/.opam/default/bin/ocamldep.opt -modules digraph.ml > digraph.ml.depends
 # Target: digraph.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:digraph.cmo, file:digraph.ml, implem, ocaml, quiet }
-/Users/echo/.opam/default/bin/ocamlc.opt -c -o digraph.cmo digraph.ml # cached
+/Users/echo/.opam/default/bin/ocamlc.opt -c -o digraph.cmo digraph.ml
 # Compilation successful.
