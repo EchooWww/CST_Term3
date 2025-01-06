@@ -38,7 +38,7 @@ fun MainContent() {
                 arguments = listOf(navArgument("color"){
                     type = NavType.StringType
                 })){
-                val color:String = it.arguments?.getString("color")?:""
+                val color:String = it.arguments?.getLong("color")?.toString(16) ?: "000000"
                 Info(color)
             }
         }
